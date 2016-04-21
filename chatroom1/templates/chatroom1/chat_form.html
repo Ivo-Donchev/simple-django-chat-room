@@ -1,0 +1,12 @@
+{% extends 'chatroom1/chat_room_cbv.html' %}
+
+{% block  chatFormExtension %}
+    <form method="POST" action"">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Изпрати">
+    </form>
+
+    <div id="USERNAME">{{ request.user.username }}</div> 
+
+{% endblock %}

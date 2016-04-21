@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat room</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script type="text/javascript">
+        function scrollToBottom(){
+            var objDiv = document.getElementById("messages");
+            objDiv.scrollTop = objDiv.scrollHeight;
+        }
+        $(document).ready(function(){   
+            scrollToBottom();
+            setInterval(function(){
+                $.ajax({
+                    'url': 'update',
+                    'data': {},
+                    'contentType': 'text/html',
+                    'success': function(data){
+                    $('#messages').append(data);
+                    } 
+                });
+                
+                scrollToBottom()
+            }, 1000)
+        })
+    </script>
+
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'chatroom1/style.css' %}" />
+
+</head>
+<body>
+    {{updated_messages}}
+    <h1>Chat room</h1>
+    <h2>Messages</h2>
+    <ul id="messages">
+    {% for message in messages %}
+        <li class="message">
+            {{ message.publisher }}, {{ message.date|date:"G:i" }}
+            <pre>
+            {{ message.message }}
+        </li>
+    {% endfor %}
+    </ul>
+
+    <form method="POST" action"">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Изпрати">
+    </form>
+    <div id="USERNAME">{{ request.user.username }}</div>
+
+    {% block chatFormExtension %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,7 @@
+{% for message in updated_messages %}
+    <li class="message">
+        {{ message.publisher }}, {{ message.date|date:"G:i" }}
+        <pre>
+        {{ message.message }}
+    </li>
+{% endfor %}

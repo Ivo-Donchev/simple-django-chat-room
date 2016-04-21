@@ -1,0 +1,11 @@
+{% extends 'chatroom1/index.html' %}
+
+{% block content %}
+    <h2>Messages</h2>
+    <ul>
+    {% for message in messages %}
+        <li>{{ message.publisher }} - {{ message.message }}</li>
+    {% endfor %}
+    </ul>
+    
+{% endblock %}
